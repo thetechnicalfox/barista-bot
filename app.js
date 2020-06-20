@@ -12,7 +12,7 @@ self.on('message', message => {
     const args = message.content.slice(prefix.length).split(' ');
     const command = args.shift().toLowerCase();
 
-    if (command == 'info' ) {
+    if (command == 'info' || command == 'help') {
       const Embed = new Discord.MessageEmbed()
           .setColor('#d35933')
           .setTitle('Barista')
@@ -28,7 +28,7 @@ self.on('message', message => {
 
       message.channel.send(Embed);
     }
-    if (command == 'commands') {
+    if (command == 'commands' || command == 'cmds') {
       const Embed = new Discord.MessageEmbed()
           .setColor('#d35933')
           .setTitle('Available Commands')
