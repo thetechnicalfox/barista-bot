@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/thetechnicalfox/barista-bot#readme",
   "dependencies": {
-    "discord.js": "^12.2.0"
+    "discord.js": "^12.2.0",
+    "enmap": "^5.3.1",
+    "fs": "0.0.1-security"
   }
 }

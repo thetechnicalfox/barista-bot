@@ -1,48 +1,32 @@
-const Discord = require('discord.js');
-const self = new Discord.Client();
-const config = require('./config.json')
+const Discord = require("discord.js");
+const Enmap = require("enmap");
+const fs = require("fs");
 
-self.on('ready', () => {
-  console.log(`Logged in as ${self.user.tag}!`);
+const self = new Discord.Client();
+const config = require("./config.json");
+// We also need to make sure we're attaching the config to the CLIENT so it's accessible everywhere!
+self.config = config;
+
+fs.readdir("./events/", (err, files) => {
+  if (err) return console.error(err);
+  files.forEach(file => {
+    const event = require(`./events/${file}`);
+    let eventName = file.split(".")[0];
+    self.on(eventName, event.bind(null, self));
+  });
 });
 
-self.on('message', message => {
-    const prefix = config.prefix;
-    if (!message.content.startsWith(prefix) || message.author.bot) return;
-    const args = message.content.slice(prefix.length).split(' ');
-    const command = args.shift().toLowerCase();
+self.commands = new Enmap();
 
-    if (command == 'info' || command == 'help') {
-      const Embed = new Discord.MessageEmbed()
-          .setColor('#d35933')
-          .setTitle('Barista')
-        	.setDescription('Just a boring utility bot that will sometimes serve you coffee.')
-	        .setThumbnail('https://i.imgur.com/mBEZeTG.png')
-	        .addFields(
-	           	{ name: 'Version', value: '1.0', inline: true },
-	          	{ name: 'Servers', value: `${self.guilds.cache.size}`, inline: true },
-	          )
-	        .addField('Users', `${self.users.cache.size}`, true)
-	        .setTimestamp()
-	        .setFooter('Designed by TheTechnicalFox', 'https://i.imgur.com/zJdTxGQ.png');
-
-      message.channel.send(Embed);
-    }
-    if (command == 'commands' || command == 'cmds') {
-      const Embed = new Discord.MessageEmbed()
-          .setColor('#d35933')
-          .setTitle('Available Commands')
-          .setThumbnail('https://i.imgur.com/mBEZeTG.png')
-          .addFields(
-            { name: 'Prefix', value: 'All commands should follow the b. prefix (example: b.info)', inline: true },
-            { name: 'Commands', value: 'b.info, b.commands', inlune: true})
-          .setTimestamp()
-          .setFooter('Designed by TheTechnicalFox', 'https://i.imgur.com/zJdTxGQ.png')
-       message.channel.send(Embed);
-    }
-    if (command == 'hello') {
-      message.reply('Hey!')
-    }
+fs.readdir("./commands/", (err, files) => {
+  if (err) return console.error(err);
+  files.forEach(file => {
+    if (!file.endsWith(".js")) return;
+    let props = require(`./commands/${file}`);
+    let commandName = file.split(".")[0];
+    console.log(`Attempting to load command ${commandName}`);
+    self.commands.set(commandName, props);
+  });
 });
 
 self.login(config.token);
