@@ -1,6 +1,11 @@
-General:
-- Command handler
+General: 
+- cleanup formatting
+- Organize commands into folders
 
-Commands:
+New Commands:
 - reload
 - say
+
+Update commands:
+- move help to embed
+- set ping to give real ping
