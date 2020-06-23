@@ -1,3 +1,8 @@
-exports.run = (self, message, args) => {
-    message.channel.send("pong!").catch(console.error);
-};
+module.exports = {
+    name: 'ping',
+    description: 'Ping!',
+    cooldown: 3,
+    execute(message, args) {
+        message.channel.send('Pong.');
+    }
+}
