@@ -26,12 +26,13 @@ self.on('message', message => {
 
   if (!command) return;
 
+  // GuildOnly module.exports tag
   if (command.guildOnly && message.channel.type !=='text') {
-    return message.reply(`I cannot execute that command inside DMs!`);
+    return message.reply(`:x: Error: I cannot execute that command inside DMs!`);
   }
-
+  // Arguments module.exports tag
   if (command.args && !args.length) {
-    let reply = `You didn't provide any arguments!`;
+    let reply = `:x: Error: This command requires arguments.`;
     if (command.usage) {
       reply += `\nThe proper usage for this command should be: \`${prefix}${command.name} ${command.usage}\``;
     }
@@ -42,7 +43,7 @@ self.on('message', message => {
     command.execute(message, args);
   } catch (error) {
     console.error(error);
-    message.reply('There was an error while attempting to execute that command.')
+    message.reply(':x: There was an error while attempting to execute that command.')
   }
 });
 
