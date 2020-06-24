@@ -1,6 +1,7 @@
 const fs = require('fs');
 const Discord = require('discord.js');
-const {prefix, token} = require('./config.json');
+const {prefix, token, privilegedID} = require('./config.json');
+const { config } = require('process');
 
 const self = new Discord.Client();
 self.commands = new Discord.Collection();
@@ -32,10 +33,16 @@ self.on('message', message => {
   }
   // Arguments module.exports tag
   if (command.args && !args.length) {
-    let reply = `:x: Error: This command requires arguments.`;
+    let reply = ':x: Error: This command requires arguments.';
     if (command.usage) {
       reply += `\nThe proper usage for this command should be: \`${prefix}${command.name} ${command.usage}\``;
     }
+    return message.channel.send(reply);
+  }
+  // Privileged module.exports.tag
+  if (command.privileged && !message.member.id == privilegedID) {
+    console.log(`User ${message.author} attempted to execute ${command.name}`);
+    let reply = ':x: Error: Only bot administrators can execute this command.'
     return message.channel.send(reply);
   }
 

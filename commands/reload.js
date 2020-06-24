@@ -4,6 +4,7 @@ module.exports = {
     usage: '<command-name>',
     args: true,
     guildOnly: true,
+    privileged: true,
     execute(message, args) {
         const commandName = args[0].toLowerCase();
         const command = message.client.commands.get(commandName)
