@@ -3,8 +3,11 @@ General:
 - Organize commands into folders
 
 New Commands:
-- reload
 - say
+- userinfo
+- serverinfo
+- kick
+- ban
 
 Update commands:
 - move help to embed
