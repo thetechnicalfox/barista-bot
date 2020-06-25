@@ -40,7 +40,7 @@ self.on('message', message => {
     return message.channel.send(reply);
   }
   // Privileged module.exports.tag
-  if (command.privileged && !message.member.id == privilegedID) {
+  if (command.privileged && !message.author == privilegedID) {
     console.log(`User ${message.author} attempted to execute ${command.name}`);
     let reply = ':x: Error: Only bot administrators can execute this command.'
     return message.channel.send(reply);
