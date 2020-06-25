@@ -13,7 +13,8 @@ for (const file of commandFiles) {
 }
 
 self.once('ready', () => {
-	console.log('Ready!');
+  console.log(`${self.user.username} is ready!`);
+  self.user.setActivity(`Coffee | ${prefix}`, {type: 'WATCHING'});
 });
 
 self.on('message', message => {
