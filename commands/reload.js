@@ -3,7 +3,6 @@ module.exports = {
     description: 'Reloads a command',
     usage: '<command-name>',
     args: true,
-    guildOnly: true,
     privileged: true,
     execute(message, args) {
         const commandName = args[0].toLowerCase();
