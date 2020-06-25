@@ -29,28 +29,59 @@ self.on('message', message => {
 
   // GuildOnly module.exports tag
   if (command.guildOnly && message.channel.type !=='text') {
-    return message.reply(`:x: Error: I cannot execute that command inside DMs!`);
+    return message.channel.send({embed: {
+      color: 'FF0000',
+      title: 'Error',
+      description: 'This command cannot be executed inside of DMs.',
+      timestamp: new Date(),
+      footer: {
+        icon_url: 'https://i.imgur.com/WtJZ3Wk.png',
+        text: 'Barista Bot'
+      }
+    }})
   }
   // Arguments module.exports tag
   if (command.args && !args.length) {
-    let reply = ':x: Error: This command requires arguments.';
+    let embed = new Discord.MessageEmbed()
+      .setColor('FF0000')
+      .setTitle('Error')
+      .setDescription('This command requires arguments.')
+      .setTimestamp()
+      .setFooter('Barista Bot','https://i.imgur.com/WtJZ3Wk.png');
     if (command.usage) {
-      reply += `\nThe proper usage for this command should be: \`${prefix}${command.name} ${command.usage}\``;
+      embed.addFields( {name: 'Usage', value: `\nThe proper usage for this command should be: \`${prefix}${command.name} ${command.usage}\``});
     }
-    return message.channel.send(reply);
+    return message.channel.send(embed);
   }
   // Privileged module.exports.tag
   if (command.privileged && !message.author == privilegedID) {
-    console.log(`User ${message.author} attempted to execute ${command.name}`);
-    let reply = ':x: Error: Only bot administrators can execute this command.'
-    return message.channel.send(reply);
+    console.log(`User ${message.author} attempted to execute command ${command.name}`);
+    return message.channel.send({embed: {
+      color: 'FF0000',
+      title: 'Error',
+      description: 'Only bot administrators can execute this command.',
+      timestamp: new Date(),
+      footer: {
+        icon_url: 'https://i.imgur.com/WtJZ3Wk.png',
+        text: 'Barista Bot'
+      }
+    }});
   }
 
   try {
     command.execute(message, args);
   } catch (error) {
     console.error(error);
-    message.reply(':x: There was an error while attempting to execute that command.')
+    message.channel.send({embed: {
+      color: 'FF0000',
+      title: 'Error',
+      description: 'There was an error while attemtping to execute that command.',
+      timestamp: new Date(),
+      footer: {
+        icon_url: 'https://i.imgur.com/WtJZ3Wk.png',
+        text: 'Barista Bot'
+      }
+    }})
   }
 });
 
