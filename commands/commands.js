@@ -12,7 +12,7 @@ module.exports = {
         if (!args.length) {
             data.push(`Here is a list of all available commands:`);
             data.push(commands.map(command => command.name).join(', '));
-            data.push('\nYou can send \`${prefix}help (command name)\` to get info on a specific command.');
+            data.push('\nYou can send \`b.help (command name)\` to get info on a specific command.');
 
             return message.author.send(data, {split: true})
                 .then(() => {
