@@ -13,8 +13,8 @@ for (const file of commandFiles) {
 }
 
 self.once('ready', () => {
-  console.log(`${self.user.username} is ready!`);
   self.user.setActivity(`Coffee | ${prefix}`, {type: 'WATCHING'});
+  console.log(`${self.user.username} is ready!`);
 });
 
 self.on('message', message => {
@@ -76,7 +76,7 @@ self.on('message', message => {
     message.channel.send({embed: {
       color: 'FF0000',
       title: 'Error',
-      description: 'There was an error while attemtping to execute that command.',
+      description: 'There was an error while attempting to execute that command.',
       timestamp: new Date(),
       footer: {
         icon_url: 'https://i.imgur.com/WtJZ3Wk.png',
