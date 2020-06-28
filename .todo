@@ -1,6 +1,7 @@
 General: 
 - cleanup formatting
 - Organize commands into folders
+- Error / convert to simple text if !embed permission
 
 New Commands:
 - say
