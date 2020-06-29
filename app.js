@@ -12,6 +12,8 @@ for (const file of commandFiles) {
   self.commands.set(command.name, command);
 }
 
+const embeds = require('./modules/embeds.js');
+
 self.once('ready', () => {
   self.user.setActivity(`Coffee | ${prefix}`, {type: 'WATCHING'});
   console.log(`${self.user.username} is ready!`);
@@ -27,7 +29,7 @@ self.on('message', message => {
   	|| self.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
   if (!command) return;
-
+/*
   function newErrorEmbed(error) {
     errorEmbed = new Discord.MessageEmbed()
       .setColor('FF0000')
@@ -36,24 +38,25 @@ self.on('message', message => {
       .setTimestamp()
       .setFooter('Barista Bot', 'https://i.imgur.com/WtJZ3Wk.png');
 }
+*/
 
   // GuildOnly module.exports tag
   if (command.guildOnly && message.channel.type !=='text') {
-    newErrorEmbed('This command cannot be executed inside of DMs.');
+    embeds.newErrorEmbed('This command cannot be executed inside of DMs.');
     return message.channel.send(errorEmbed);
   }
   // Arguments module.exports tag
   if (command.args && !args.length) {
-    newErrorEmbed('This command requires arguments.');
+    embeds.newErrorEmbed('This command requires arguments.');
     if (command.usage) {
-      errorEmbed.addFields( {name: 'Usage', value: `\nThe proper usage for this command should be: \`${prefix}${command.name} ${command.usage}\``});
+      embeds.embedAddField('Usage',`\nThe proper usage for this command should be: \`${prefix}${command.name} ${command.usage}\``);
     }
     return message.channel.send(errorEmbed);
   }
   // Privileged module.exports.tag
   if (command.privileged && !message.author == privilegedID) {
     console.log(`User ${message.author} attempted to execute command ${command.name}`);
-    newErrorEmbed('Only bot administratos can execute this command.');
+    embeds.newErrorEmbed('Only bot administratos can execute this command.');
     return message.channel.send(errorEmbed);
   }
 
@@ -61,7 +64,7 @@ self.on('message', message => {
     command.execute(message, args, self);
   } catch (error) {
     console.error(error);
-    newErrorEmbed('There was an error while attempting to execute that command.')
+    embeds.newErrorEmbed('There was an error while attempting to execute that command.')
     message.channel.send(errorEmbed);
   }
 });

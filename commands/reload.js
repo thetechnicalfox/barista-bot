@@ -1,6 +1,7 @@
 const { DiscordAPIError } = require("discord.js");
 
 const Discord = require('discord.js');
+const embeds = require('../modules/embeds.js');
 
 module.exports = {
     name: 'reload',
@@ -12,17 +13,10 @@ module.exports = {
         const commandName = args[0].toLowerCase();
         const command = message.client.commands.get(commandName)
             || message.client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
-        
-        if (!command) return message.channel.send({embed: {
-            color: 'FF0000',
-            title: 'Error',
-            description: `There is no command listed under \`${commandName}\``,
-            timestamp: new Date(),
-            footer: {
-                icon_url: 'https://i.imgur.com/WtJZ3Wk.png',
-                text: 'Barista Bot'
-            }
-        }});
+          if (!command) {
+              embeds.newErrorEmbed(`There is no command listed under \`${commandName}\``);
+              return message.channel.send(errorEmbed);
+          }
 
         delete require.cache[require.resolve(`./${command.name}.js`)];
 
@@ -41,20 +35,9 @@ module.exports = {
             }});
         } catch (error) {
             console.log(error);
-            message.channel.send({embed: {
-                color: 'FF0000',
-                title: 'Error',
-                description: `There was an error while reloading command \`${command.name}\``,
-                fields: [{
-                    name: 'Console Log',
-                    value: `${error.message}`
-                }],
-                timestamp: new Date(),
-                footer: {
-                    icon_url: 'https://i.imgur.com/WtJZ3Wk.png',
-                    text: 'Barista Bot'
-                }
-            }})
+            embeds.newErrorEmbed(`There was an error while reloading command \`${command.name}\``);
+            embeds.embedAddField('Console Log', `${error.message}`);
+            message.channel.send(errorEmbed);
         }
     }
 }
