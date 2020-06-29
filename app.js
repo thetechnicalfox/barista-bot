@@ -70,7 +70,7 @@ self.on('message', message => {
   }
 
   try {
-    command.execute(message, args);
+    command.execute(message, args, self);
   } catch (error) {
     console.error(error);
     message.channel.send({embed: {
