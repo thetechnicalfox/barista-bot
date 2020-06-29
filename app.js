@@ -28,61 +28,41 @@ self.on('message', message => {
 
   if (!command) return;
 
+  function newErrorEmbed(error) {
+    errorEmbed = new Discord.MessageEmbed()
+      .setColor('FF0000')
+      .setTitle('Error')
+      .setDescription(error)
+      .setTimestamp()
+      .setFooter('Barista Bot', 'https://i.imgur.com/WtJZ3Wk.png');
+}
+
   // GuildOnly module.exports tag
   if (command.guildOnly && message.channel.type !=='text') {
-    return message.channel.send({embed: {
-      color: 'FF0000',
-      title: 'Error',
-      description: 'This command cannot be executed inside of DMs.',
-      timestamp: new Date(),
-      footer: {
-        icon_url: 'https://i.imgur.com/WtJZ3Wk.png',
-        text: 'Barista Bot'
-      }
-    }})
+    newErrorEmbed('This command cannot be executed inside of DMs.');
+    return message.channel.send(errorEmbed);
   }
   // Arguments module.exports tag
   if (command.args && !args.length) {
-    let embed = new Discord.MessageEmbed()
-      .setColor('FF0000')
-      .setTitle('Error')
-      .setDescription('This command requires arguments.')
-      .setTimestamp()
-      .setFooter('Barista Bot','https://i.imgur.com/WtJZ3Wk.png');
+    newErrorEmbed('This command requires arguments.');
     if (command.usage) {
-      embed.addFields( {name: 'Usage', value: `\nThe proper usage for this command should be: \`${prefix}${command.name} ${command.usage}\``});
+      errorEmbed.addFields( {name: 'Usage', value: `\nThe proper usage for this command should be: \`${prefix}${command.name} ${command.usage}\``});
     }
-    return message.channel.send(embed);
+    return message.channel.send(errorEmbed);
   }
   // Privileged module.exports.tag
   if (command.privileged && !message.author == privilegedID) {
     console.log(`User ${message.author} attempted to execute command ${command.name}`);
-    return message.channel.send({embed: {
-      color: 'FF0000',
-      title: 'Error',
-      description: 'Only bot administrators can execute this command.',
-      timestamp: new Date(),
-      footer: {
-        icon_url: 'https://i.imgur.com/WtJZ3Wk.png',
-        text: 'Barista Bot'
-      }
-    }});
+    newErrorEmbed('Only bot administratos can execute this command.');
+    return message.channel.send(errorEmbed);
   }
 
   try {
     command.execute(message, args, self);
   } catch (error) {
     console.error(error);
-    message.channel.send({embed: {
-      color: 'FF0000',
-      title: 'Error',
-      description: 'There was an error while attempting to execute that command.',
-      timestamp: new Date(),
-      footer: {
-        icon_url: 'https://i.imgur.com/WtJZ3Wk.png',
-        text: 'Barista Bot'
-      }
-    }})
+    newErrorEmbed('There was an error while attempting to execute that command.')
+    message.channel.send(errorEmbed);
   }
 });
 
