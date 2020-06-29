@@ -16,7 +16,7 @@ const embeds = require('./modules/embeds.js');
 
 self.once('ready', () => {
   self.user.setActivity(`Coffee | ${prefix}`, {type: 'WATCHING'});
-  console.log(`${self.user.username} is ready!`);
+  console.log(`${self.user.username} is ready, serving ${self.users.cache.size} users in ${self.guilds.cache.size} servers.`);
 });
 
 self.on('message', message => {
@@ -29,16 +29,6 @@ self.on('message', message => {
   	|| self.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
   if (!command) return;
-/*
-  function newErrorEmbed(error) {
-    errorEmbed = new Discord.MessageEmbed()
-      .setColor('FF0000')
-      .setTitle('Error')
-      .setDescription(error)
-      .setTimestamp()
-      .setFooter('Barista Bot', 'https://i.imgur.com/WtJZ3Wk.png');
-}
-*/
 
   // GuildOnly module.exports tag
   if (command.guildOnly && message.channel.type !=='text') {
