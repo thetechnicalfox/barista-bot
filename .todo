@@ -4,7 +4,6 @@ General:
 - Error / convert to simple text if !embed permission
 
 New Commands:
-- update from github
 - userinfo
 - serverinfo
 - kick
