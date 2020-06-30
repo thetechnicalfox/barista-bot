@@ -46,7 +46,7 @@ self.on('message', message => {
   // Privileged module.exports.tag
   if (command.privileged && !message.author == privilegedID) {
     console.log(`User ${message.author} attempted to execute command ${command.name}`);
-    embeds.newErrorEmbed('Only bot administratos can execute this command.');
+    embeds.newErrorEmbed('Only bot administrators can execute this command.');
     return message.channel.send(errorEmbed);
   }
 
