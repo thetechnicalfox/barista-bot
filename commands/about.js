@@ -1,5 +1,4 @@
-const { DiscordAPIError } = require("discord.js")
-
+const { prefix } = require('../config.json');
 const Discord = require('discord.js');
 
 module.exports = {
@@ -16,7 +15,7 @@ module.exports = {
             .addField('Version', '1.0', true)
             .addFields(
                 {name: 'Maintained by', value: 'TheTechnicalFox#0056', inline: true },
-                {name: 'Commands', value: 'b.commands', inlune: true} )
+                {name: 'Commands', value: `${prefix}commands`, inlune: true} )
             .setTimestamp()
             .setFooter('Barista Bot', 'https://i.imgur.com/WtJZ3Wk.png');
 
