@@ -1,4 +1,3 @@
-
 module.exports = {
     name: 'update',
     description: 'Updates bot from github repository',
