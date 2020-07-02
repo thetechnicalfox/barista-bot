@@ -1,3 +1,5 @@
+const embeds = require('../modules/embeds.js');
+
 module.exports = (self, message) => {
     if (!message.content.startsWith(self.config.prefix) || message.author.bot) return;
 
