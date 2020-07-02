@@ -1,6 +1,7 @@
 const fs = require('fs');
 const Discord = require('discord.js');
 const config = require('./config.json');
+const path = require("path");
 
 const self = new Discord.Client();
 self.config = config;
@@ -15,11 +16,24 @@ fs.readdir("./events/", (err, files) => {
 });
 
 self.commands = new Discord.Collection();
-const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
 
-for (const file of commandFiles) {
-  const command = require(`./commands//${file}`);
-  self.commands.set(command.name, command);
+function walk(dir, callback) {
+  fs.readdir(dir, function(err, files) {
+      if (err) throw err;
+      files.forEach(function(file) {
+          const filepath = path.join(dir, file);
+          fs.stat(filepath, function(err,stats) {
+              if (stats.isDirectory()) {
+                  walk(filepath, callback);
+              } else if (stats.isFile() && file.endsWith('.js')) {
+                  let command = require(`./${filepath}`);
+                  console.log(`Loading command ${filepath}`);
+                  self.commands.set(command.name, command);
+              }
+          });
+      });
+  });
 }
+walk(`./commands/`)
 
 self.login(config.token);

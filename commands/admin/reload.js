@@ -1,7 +1,7 @@
 const { DiscordAPIError } = require("discord.js");
 
 const Discord = require('discord.js');
-const embeds = require('../modules/embeds.js');
+const embeds = require('../../modules/embeds.js');
 
 module.exports = {
     name: 'reload',
