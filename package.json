@@ -19,7 +19,6 @@
   "homepage": "https://github.com/thetechnicalfox/barista-bot#readme",
   "dependencies": {
     "discord.js": "^12.2.0",
-    "enmap": "^5.3.1",
     "fs": "0.0.1-security",
     "moment": "^2.27.0",
     "moment-duration-format": "^2.3.2",
