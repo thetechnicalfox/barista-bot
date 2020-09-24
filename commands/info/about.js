@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 module.exports = {
     name: 'about',
     aliases: 'help',
-    description: 'Explains the purpose of the bot and provides links',
+    description: 'Explains the purpose of the bot and provides links to relevant contribution information.',
     execute (message, args) {
         const messageEmbed = new Discord.MessageEmbed()
             .setColor('386895')
