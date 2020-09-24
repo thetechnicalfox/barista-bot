@@ -1,8 +1,8 @@
 module.exports = {
     name: 'args-info',
-    description: 'Shows the command and the arguments provided',
+    description: 'Restates the provided arguments and their length.',
     args: true,
-    usage: `<arguments>`,
+    usage: `{arguments}`,
     execute(message, args) {
           message.channel.send(`Arguments: ${args} length: ${args.length}`);
     }

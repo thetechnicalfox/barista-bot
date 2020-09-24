@@ -1,6 +1,6 @@
 module.exports = {
     name: 'update',
-    description: 'Updates bot from github repository',
+    description: 'Updates bot from public github repository',
     privileged: true,
     execute(message, args, self) {
         require('simple-git')()

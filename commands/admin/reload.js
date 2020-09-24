@@ -5,8 +5,8 @@ const embeds = require('../../modules/embeds.js');
 
 module.exports = {
     name: 'reload',
-    description: 'Reloads a command',
-    usage: '<command-name>',
+    description: 'Reloads the provided command without restarting the node instance.',
+    usage: '{command-name}',
     args: true,
     privileged: true,
     execute(message, args) {
