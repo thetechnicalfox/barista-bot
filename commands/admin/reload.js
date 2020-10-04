@@ -23,6 +23,7 @@ module.exports = {
         try {
             const newCommand = require(`./${command.name}.js`);
             message.client.commands.set(newCommand.name, newCommand);
+            console.log(`Command "${command.name}" has been reloaded by ${message.author.id}`);
             message.channel.send({embed: {
                 color: '386895',
                 title: 'Success',
