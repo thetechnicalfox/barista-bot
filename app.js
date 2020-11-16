@@ -36,4 +36,4 @@ function walk(dir, callback) {
 }
 walk(`./commands/`)
 
-self.login(config.token);
+self.login(process.env.TOKEN);
