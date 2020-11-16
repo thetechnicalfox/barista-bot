@@ -1,17 +1,16 @@
 const embeds = require('../modules/embeds.js');
-const config = require('../config.json');
 
 module.exports = (self, message) => {
     if (!message.content.startsWith(process.env.PREFIX) || message.author.bot) return;
 
     const args = message.content.slice(process.env.PREFIX.length).split(/ +/);
     const commandName = args.shift().toLowerCase();
-  
+
     const command = self.commands.get(commandName)
         || self.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
-  
+
     if (!command) return;
-  
+
     // GuildOnly module.exports tag
     if (command.guildOnly && message.channel.type !=='text') {
       embeds.newErrorEmbed('This command cannot be executed inside of DMs.');
@@ -31,7 +30,7 @@ module.exports = (self, message) => {
       embeds.newErrorEmbed('Only bot administrators can execute this command.');
       return message.channel.send(errorEmbed);
     }
-  
+
     try {
       command.execute(message, args, self);
     } catch (error) {

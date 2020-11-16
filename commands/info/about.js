@@ -1,4 +1,3 @@
-const { prefix } = require('../../config.json');
 const Discord = require('discord.js');
 
 module.exports = {
@@ -15,7 +14,7 @@ module.exports = {
             .addField('Version', '2.0', true)
             .addFields(
                 {name: 'Maintained by', value: 'TheTechnicalFox#0056', inline: true },
-                {name: 'Commands', value: `${prefix}commands`, inlune: true} )
+                {name: 'Commands', value: `${process.env.PREFIX}commands`, inlune: true} )
             .setTimestamp()
             .setFooter('Barista Bot', 'https://i.imgur.com/WtJZ3Wk.png');
 

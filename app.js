@@ -1,10 +1,8 @@
 const fs = require('fs');
 const Discord = require('discord.js');
-const config = require('./config.json');
 const path = require("path");
 
 const self = new Discord.Client();
-self.config = config;
 
 fs.readdir("./events/", (err, files) => {
   if (err) return console.error(err);
