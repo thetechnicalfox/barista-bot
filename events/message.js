@@ -2,9 +2,9 @@ const embeds = require('../modules/embeds.js');
 const config = require('../config.json');
 
 module.exports = (self, message) => {
-    if (!message.content.startsWith(self.config.prefix) || message.author.bot) return;
+    if (!message.content.startsWith(process.env.PREFIX) || message.author.bot) return;
 
-    const args = message.content.slice(self.config.prefix.length).split(/ +/);
+    const args = message.content.slice(process.env.PREFIX.length).split(/ +/);
     const commandName = args.shift().toLowerCase();
   
     const command = self.commands.get(commandName)
@@ -26,7 +26,7 @@ module.exports = (self, message) => {
       return message.channel.send(errorEmbed);
     }
     // Privileged module.exports.tag
-    if (command.privileged && !message.author == config.privilegedID) {
+    if (command.privileged && !message.author == process.env.PRIVILEGEDID) {
       console.log(`User ${message.author} attempted to execute command ${command.name}`);
       embeds.newErrorEmbed('Only bot administrators can execute this command.');
       return message.channel.send(errorEmbed);
